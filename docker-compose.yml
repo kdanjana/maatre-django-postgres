@@ -8,7 +8,8 @@ services:
       - "8000:8000"
     container_name: appc
     volumes:
-      - ./maatre:/app
+      - ./ecommerce:/app
+      - dev-static-db:/vol/web
     command: >
       sh -c "/scripts/run.sh"
     environment:
