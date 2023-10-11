@@ -1,0 +1,71 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="album py-5 bg-light">        
+    <div class="container">    
+        <div class="row"> 
+            <form method="POST" action="{% url 'all_products' %}">
+                {% csrf_token %}
+            <div class="col">
+            <input type="search" name="product_name" placeholder="Search for products" 
+            class="form-control form-control-lg form-control-borderless ">
+            </div> <br>
+            <div class="col-auto text-center">
+                <button class="btn btn-primary my-2 btn-lg" type="submit"> Search </button>
+            </div>
+            <div class="text-center"> <h4>{{ error }} </h4></div>
+        </div>
+
+            
+    </div>
+        <hr>
+        <br>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">  
+    {% for product in all_products %}               
+        <div class="col">
+            <div class="card shadow-sm">
+                <img class="img-fluid" alt="Responsive image" src="{{product.image.url}}">
+                <div class="card-body">
+                    <p class="card-text">
+                    <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{product.title | capfirst}}</a>
+                    </p>
+                <div class="d-flex justify-content-between align-items-center">
+                <h6>${{ product.price }} </h6>
+                </div>
+                </div>
+            </div>
+    
+        </div>
+{% endfor %}
+</div>
+</form>
+</div>
+<div class="container">
+    <br> 
+<div class="row">
+    <div class="col-md-6 offset-md-4">
+        <div class="pagination">
+            <span class="step-links">
+                {% if all_products.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    &nbsp;
+                    <a href="?page={{ all_products.previous_page_number }}">previous</a>
+                {% endif %}
+                &nbsp;
+                <span class="current">
+                    Page {{ all_products.number }} of {{ all_products.paginator.num_pages }}.
+                </span>
+                &nbsp;
+                {% if all_products.has_next %}
+                    <a href="?page={{ all_products.next_page_number }}">next</a>&nbsp;
+                    <a href="?page={{ all_products.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+<br>
+</div>
+
+{% endblock %}

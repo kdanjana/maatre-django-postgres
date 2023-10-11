@@ -1,0 +1,89 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% load mathfilters %}
+
+{% block content %}
+
+<main class="pt-5">    
+    <div class="container">      
+      <h1 class="h5"> Shopping cart </h1>
+	    <hr>
+      {% for item in cart %}
+        {% with product=item.product %}      
+      <br>
+      <div class="row mb-4 border product-item">        
+        <div class="col-md-3 col-lg-2 order-md-first bg-light">        
+            <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{ product.image.url }}"> 
+        </div>        
+        <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">          
+          <a href="{{ product.get_absolute_url }}" class="text-info text-decoration-none">           
+            <h1 class="h5 pt-2"> {{ product.title | capfirst }} </h1>          
+          </a>          
+          <div class="border">            
+            <div class="col border-bottom">              
+              <div class="row p-3">      
+              <div class="col-6"> Price of Single Piece: </div>
+              <div class="col-6 text-end"><span class="h6 fw-bold">$ {{ product.price }} </span></div>     
+              </div>              
+          </div> 
+          <div class="col border-bottom">              
+            <div class="row p-3">      
+            <div class="col-6"> Total Price: </div>
+            <div class="col-6 text-end"><span class="h6 fw-bold">$ {{ product.price|mul:item.qty }} </span></div>     
+            </div>              
+        </div>            
+            <div class="col">              
+              <div class="row p-3">                
+                <div class="col-12">  
+                  <form action="{% url 'cart_update' %}" method="POST">
+                    {% csrf_token %}                
+                  <label for="select">Qty</label>
+                  &nbsp;                   
+                  <select id="select" name="selection">                  
+                    <option selected>                  
+                        {{item.qty}}                  
+                    </option>                  
+                    <option value="1">1</option>                  
+                    <option value="2">2</option>                  
+                    <option value="3">3</option>                  
+                    <option value="4">4</option>                  
+                  </select>                  
+                  <br> <br>
+                  <button type="submit" name="product_id" value="{{ product.id}}" class="btn btn-primary btn-sm update-button">
+                    Update                  
+                  </button> 
+                </form>
+                 
+                           
+                      <form action="{% url 'cart_delete' %}" method="POST">
+                        {% csrf_token %} 
+                        <button type="submit" name="product_id" value="{{ product.id }}" class="btn btn-danger btn-sm delete-button">
+                          Delete        
+                        </button>
+                      </form>
+
+                </div>        
+            </div>        
+            </div>    
+            </div>    
+        </div>      
+    </div>   
+    {% endwith %}  
+    {% endfor %}  
+      <div class="col-12 text-end"> 
+        <div class="h6 fw-bold"> Sub total: $ <div id="total" class="d-inline-flex"> {{ cart.get_total }} </div></div> 
+      </div> 
+    </div>  
+    <br>
+    <div class="col-11 text-end" >
+    <a class="btn btn-primary navbar-btn text-white" type="button"  
+      href="{% url 'saveitems_cart' %}"> Save for later </a> &nbsp; &nbsp;  &nbsp;    
+      <a class="btn btn-primary navbar-btn text-white text-end" type="button"  
+      href="{% url 'checkout' %}"> Proceed to checkout </a>
+    </div>
+    <br>
+ </main>
+{% endblock %}
+

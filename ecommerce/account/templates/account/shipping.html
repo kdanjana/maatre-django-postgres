@@ -1,0 +1,42 @@
+{% include "store/base.html" %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+    <body>
+        <br>
+        <div class="container bg-white shadow-md p-5 form-layout">
+            <h3> Shipping Address</h3>
+            <hr>
+            <form method='POST' autocomplete='off'>
+                {% csrf_token %}
+                {{ form.full_name|as_crispy_field}}
+                <br>
+                {{ form.email|as_crispy_field}}
+                <br> 
+                {{ form.address1|as_crispy_field}}
+                <br> 
+                {{ form.address2|as_crispy_field}}
+                <br> 
+                {{ form.city|as_crispy_field}}
+                <br> 
+                {{ form.state|as_crispy_field}}
+                <br>
+                {{ form.country|as_crispy_field}}
+                <br>
+                <button type="submit" class="btn btn-primary navbar-btn w-100 text-white">
+                 &nbsp; Update Shipping Address </button>
+            </form>
+            <br> 
+            <a class="btn btn-primary navbar-btn w-100 text-white" type="button"  
+                href="{% url 'dashboard' %}"> Back </a>
+           
+        </div>
+    </body>
+    <br>
+
+
+{% endblock %} 

@@ -1,0 +1,43 @@
+{% include "store/base.html" %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+    <body>
+        <br>
+        <div class="container bg-white shadow-md p-5 form-layout">
+            <h3> Update your account</h3>
+            <hr>
+            <form method='POST' autocomplete='off'>
+                {% csrf_token %}
+                {{ form.username|as_crispy_field}}
+                <br>
+                {{ form.email|as_crispy_field}}
+                <br> <br>
+                <button type="submit" class="btn btn-primary navbar-btn w-100 text-white">
+                 &nbsp; Update </button>
+            </form>
+        </div>
+        <hr>
+        <div class="container bg-white shadow-md p-5 form-layout"> 
+            <h3> Delete  your account </h3>
+            <br>
+            <a class="btn btn-primary navbar-btn w-100 text-white" type="button"  
+            href="{% url 'delete_account' %}"> Delete Account </a>
+        </div>
+        <hr>
+        <div class="container bg-white shadow-md p-5 form-layout"> 
+            <h3> Back to Dashboard </h3>
+            <br>
+            <a class="btn btn-primary navbar-btn w-100 text-white" type="button"  
+                href="{% url 'dashboard' %}"> Back </a>
+        </div>
+
+    </body>
+    <br>
+
+
+{% endblock %} 
