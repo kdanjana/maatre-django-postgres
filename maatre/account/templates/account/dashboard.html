@@ -1,0 +1,30 @@
+{% include "store/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<body>
+    <br>
+    <div class="container bg-white shadow-md p-5 form-layout">
+        <h4> Welcome {{ user|capfirst }}! </h4>
+        <hr>
+        <p> This is your dashboard where you can perform any of the following: </p>
+        <li> Shopping Cart Summary &nbsp; &nbsp; &nbsp; 
+            <a class="btn btn-primary navbar-btn text-white" type="button"  
+            href="{% url 'cart_summary' %}"> My cart </a> </li>
+        <hr>
+        <li> Track you orders &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+            <a class="btn btn-primary navbar-btn text-white" type="button"  
+            href="{% url 'track_orders' %}"> My orders </a> </li>
+        <hr>
+        <li> Manage your account &nbsp; &nbsp; &nbsp; &nbsp; 
+        <a class="btn btn-primary navbar-btn text-white" type="button"  
+        href="{% url 'profile_management' %}"> Profile Management </a> </li>      
+        <hr>
+        <li> Manage your Shipping  &nbsp; &nbsp; &nbsp; &nbsp; 
+        <a class="btn btn-primary navbar-btn text-white" type="button"  
+        href="{% url 'shipping' %}"> Shipping Address </a> </li> 
+
+    </div>
+</body>
+{% endblock %} 

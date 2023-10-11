@@ -1,0 +1,2 @@
+jpeg-dev zlib zlib-dev                               --- needed for pillows
+build-base postgresql-dev musl-dev  postgresql-client --- needed for postgres db

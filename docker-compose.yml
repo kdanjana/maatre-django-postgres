@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+   app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    container_name: appc
+    volumes:
+      - ./maatre:/app
+    command: >
+      sh -c "/scripts/run.sh"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USERNAME=devuser
+      - DB_PASSWORD=pwdpwdpwd
+      - PORT=5432
+    depends_on:
+      - db
+
+   db:
+    image: postgres:13-alpine
+    container_name: dbc
+    volumes:
+      - todo-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=pwdpwdpwd
+
+volumes:
+   todo-db-data:

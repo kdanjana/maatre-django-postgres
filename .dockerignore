@@ -1,0 +1,13 @@
+.git
+.gitignore
+
+.docker
+
+todoapp/__pycache__/
+todoapp/*/__pycache__/
+todoapp/*/*/__pycache__/
+todoapp/*/*/*/__pycache__/
+.env/
+.venv/
+venv/
+
