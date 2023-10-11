@@ -32,3 +32,4 @@ services:
 
 volumes:
    todo-db-data:
+   dev-static-data:
