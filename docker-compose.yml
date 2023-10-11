@@ -25,12 +25,12 @@ services:
     image: postgres:13-alpine
     container_name: dbc
     volumes:
-      - todo-db-data:/var/lib/postgresql/data
+      - maatre-db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=pwdpwdpwd
 
 volumes:
-   todo-db-data:
+   maatre-db-data:
    dev-static-data:
