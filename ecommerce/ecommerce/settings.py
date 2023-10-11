@@ -161,6 +161,7 @@ MEDIA_URL = '/media/'
 
 #upload my pics to this location
 MEDIA_ROOT = '/vol/web/media'
+#MEDIA_ROOT = BASE_DIR / 'static/media'
 
 
 # Default primary key field type
