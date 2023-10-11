@@ -160,7 +160,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 
 #upload my pics to this location
-MEDIA_ROOT = BASE_DIR / 'static/media'
+MEDIA_ROOT = '/vol/web/media'
 
 
 # Default primary key field type
