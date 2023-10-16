@@ -9,7 +9,7 @@ services:
     container_name: appc
     volumes:
       - ./ecommerce:/app
-      - dev-static-data:/vol/web
+      - maatre-static-data:/vol/web
     command: >
       sh -c "/scripts/run.sh"
     environment:
@@ -33,4 +33,4 @@ services:
 
 volumes:
    maatre-db-data:
-   dev-static-data:
+   maatre-static-data:
