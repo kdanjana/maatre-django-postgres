@@ -14,10 +14,12 @@ services:
     #   sh -c "/scripts/run.sh"
     environment:
       - DB_HOST=db
-      - DB_NAME=devdb
-      - DB_USERNAME=devuser
-      - DB_PASSWORD=pwdpwdpwd
+      - DB_NAME=${DATABASE_NAME}
+      - DB_USERNAME=${DATABASE_USERNAME}
+      - DB_PASSWORD=${DATABASE_PASSWORD}
       - PORT=5432
+      - EMAIL_USERNAME=${EMAIL_USER}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
     depends_on:
       - db
 
@@ -27,9 +29,9 @@ services:
     volumes:
       - maatre-db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=pwdpwdpwd
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
 
 volumes:
    maatre-db-data:
