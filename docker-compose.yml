@@ -10,8 +10,8 @@ services:
     volumes:
       - ./ecommerce:/app
       - maatre-static-data:/vol/web
-    command: >
-      sh -c "/scripts/run.sh"
+    # command: >
+    #   sh -c "/scripts/run.sh"
     environment:
       - DB_HOST=db
       - DB_NAME=devdb

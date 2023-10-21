@@ -3,4 +3,4 @@
 python manage.py collectstatic --noinput
 python manage.py migrate
 
-gunicorn todoapp.wsgi:application -c gunicorn_config.py
+gunicorn ecommerce.wsgi:application -c gunicorn_config.py
