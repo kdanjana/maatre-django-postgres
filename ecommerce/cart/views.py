@@ -2,15 +2,20 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .models import CartSummary
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+
 from .cart import Cart
+from .models import CartSummary
 from store.models import Product
+
+
 
 # cart main page
 def cart_summary(request):
    return render(request, "cart/cart_summary.html")
+
 
 # adding to cart
 def cart_add(request):
@@ -59,7 +64,7 @@ def saveitems_cart(request):
     # get items in cart for that user
     CartSummary.objects.filter(user_id=user).delete()
     for product in cart:
-        prod_id = product['product_id']
+        prod_id = product['id']
         CartSummary.objects.create(user_id=user, product_id=prod_id,qty=product['qty'])
     
-    return redirect('dashborad')
+    return redirect('dashboard')
