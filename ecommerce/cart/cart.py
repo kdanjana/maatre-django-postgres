@@ -18,7 +18,7 @@ class Cart:
         if product_id in self.cart:
             self.cart[product_id]['qty'] += product_qty
         else:
-            self.cart[product_id] = {'price': str(product.price), 'qty': product_qty, 'id': product_id}
+            self.cart[product_id] = {'price': str(product.price), 'qty': product_qty}
         self.session.modified = True
 
     

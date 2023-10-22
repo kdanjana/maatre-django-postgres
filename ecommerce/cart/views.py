@@ -64,7 +64,7 @@ def saveitems_cart(request):
     # get items in cart for that user
     CartSummary.objects.filter(user_id=user).delete()
     for product in cart:
-        prod_id = product['id']
+        prod_id = product['product'].id
         CartSummary.objects.create(user_id=user, product_id=prod_id,qty=product['qty'])
     
     return redirect('dashboard')
