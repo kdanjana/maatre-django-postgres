@@ -23,10 +23,12 @@ RUN python -m venv /py && \
         --disabled-password \
         --no-create-home \
         django-user && \
-     mkdir -p /vol/web/media && \
-     mkdir -p /vol/web/static 
-    #  chown -R django-user:django-user /vol && \
-    #  chmod -R 755 /vol
+    mkdir /staticfiles && \
+    chown -R django-user:django-user /staticfiles && \
+    chmod -R 755 /staticfiles && \
+    mkdir /mediafiles && \
+    chown -R django-user:django-user /mediafiles && \
+    chmod -R 755 /mediafiles
 
 ENV PATH="/scripts:/py/bin:$PATH"
 

@@ -31,18 +31,21 @@ urlpatterns = [
             template_name='account/password/password-reset.html'
             ), 
         name='reset_password'),
+   
    # success mssg stating password reset email is sent
    path('reset_password_sent', 
         auth_views.PasswordResetDoneView.as_view(
          template_name='account/password/password-reset-sent.html'
         ), 
         name='password_reset_done'),
+   
    # password reset link is sent to our email, by clicking that link u enter new password
    path('reset/<uidb64>/<token>/', 
         auth_views.PasswordResetConfirmView.as_view(
          template_name='account/password/password-reset-form.html'  
         ), 
         name='password_reset_confirm'),
+   
    # success mssg stating password was reset
    path('reset_password_complete', 
         auth_views.PasswordResetCompleteView.as_view(

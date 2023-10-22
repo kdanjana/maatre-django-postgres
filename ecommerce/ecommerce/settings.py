@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get('DEBUG')))
+DEBUG = bool(os.environ.get('DEBUG'))
 
 ALLOWED_HOSTS = ['*']
 
@@ -158,12 +158,15 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+STATIC_ROOT = '/staticfiles'
+
 MEDIA_URL = '/media/'
 
 #upload my pics to this location
-MEDIA_ROOT = '/vol/web/media'
+MEDIA_ROOT = '/mediafiles'
+
 #MEDIA_ROOT = BASE_DIR / 'static/media'
-STATIC_ROOT = '/vol/web/static'
+
 
 
 # Default primary key field type
@@ -178,5 +181,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = 'True'
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')           # gmail account used to create app password
+EMAIL_HOST_USER = os.environ.get('EMAIL_USERNAME')           # gmail account used to create app password
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')       # app password

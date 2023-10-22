@@ -8,8 +8,8 @@ from .models import Category, Product
 # Create your views here.
 
 
-# store main page
 def store(request):
+    """ maatre store's main page"""
     all_products = Product.objects.all()
     context = {
         'all_products': all_products
@@ -19,18 +19,22 @@ def store(request):
 
 # context processor
 def categories(request):
+    """ all_categories - can be accessed from anywhere in template"""
     all_categories = Category.objects.all()
     return {"all_categories": all_categories}
 
 
-# individual product info page
+
 def product_info(request, product_slug):
+    """ to get all info about a single product """
     product = get_object_or_404(Product, slug=product_slug)
     context = {"product": product}
     return render(request, "store/product_info.html", context)
 
-# individual category page
+
+
 def list_category(request, category_slug=None):
+    """ to get all products of a category"""
     category = get_object_or_404(Category, slug=category_slug)
     products = Product.objects.filter(category=category)
     paginator = Paginator(products, 4) # show 4 products per page   
@@ -43,7 +47,9 @@ def list_category(request, category_slug=None):
     return render(request, "store/list_category.html", context)
 
 
+
 def all_products(request):  
+    """ displays all products(get),can search for a product(post)"""
     all_products = Product.objects.all() 
     if request.method == 'POST':
         product_name = request.POST.get('product_name').capitalize()

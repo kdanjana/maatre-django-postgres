@@ -17,20 +17,17 @@ from django.contrib.sites.shortcuts import get_current_site
 
 
 from .token_generator import user_tokenizer_generate
+
 # used for setting up the markup  for email verification link 
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
+
 # we want to decode token generator so it will be usabel and encode token generator when we are sending it
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
-
-
 from django.contrib.auth.models import auth     # auth allows us to do authentication
 from django.contrib.auth import authenticate
-
 from django.contrib.auth.decorators import login_required
-
-
 from django.contrib import messages
 
 
@@ -38,6 +35,7 @@ from django.contrib import messages
 
 
 def register(request):
+    """ registration page"""
     form = CreateUserForm()
     if request.method == "POST":
         form = CreateUserForm(request.POST)
@@ -93,6 +91,7 @@ def email_verification_fail(request):
 
 
 def login(request):
+    """ login page"""
     form = LoginForm()
     if request.method == 'POST':
         form = LoginForm(request, data = request.POST)

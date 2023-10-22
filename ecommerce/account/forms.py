@@ -6,7 +6,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from django.forms.widgets import PasswordInput, TextInput
 
-
 # using django's built-in User model
 from django.contrib.auth.models import User
 
@@ -41,19 +40,21 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(widget=PasswordInput())
 
 
-# updating user's username and email
+
 class UpdateUserForm(forms.ModelForm):
-    # we are not updating password so we are explicitly seting it None
-    password = None 
+    """ updating user's username and email """
+    password = None             # we are not updating password so we are explicitly seting it None
     class Meta:
         model = User
         fields = ['username', 'email']
         exclude = ['password1', 'password2']
+        
     def __init__(self, *args, **kwargs):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
-    # email validation
+        
     def clean_email(self):
+        """ email validation """
         email = self.cleaned_data.get('email')
         # exclude email of current user who is  logged in based on his primary key
         if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
