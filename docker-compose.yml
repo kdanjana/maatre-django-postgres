@@ -20,6 +20,7 @@ services:
       - EMAIL_USERNAME=${EMAIL_USER}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DEBUG=${DEBUG}
     depends_on:
       - db
 
