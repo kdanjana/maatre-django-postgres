@@ -9,14 +9,15 @@ from django.forms.widgets import PasswordInput, TextInput
 # using django's built-in User model
 from django.contrib.auth.models import User
 
-#creating user registration form
+
 class CreateUserForm(UserCreationForm):
+    """ User Registration form"""
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
 
-    # we want to have access to fields defined under Meta class, we want to modify those fields and gain
-    # access to them as we wish
+    # we want to have access to fields defined under Meta class, we want to modify those fields 
+    # and gain access to them as we wish
     def __init__(self, *args, **kwargs):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         # make email field required beacuse by default in User model email field is not required
@@ -24,8 +25,8 @@ class CreateUserForm(UserCreationForm):
 
     # by defalut django has inbuilt validation for username that is no 2 can have same username
     # we are defining validation for email field
-    # email validation
     def clean_email(self):
+        """ email validation"""
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Email is invalid.')
@@ -34,8 +35,8 @@ class CreateUserForm(UserCreationForm):
         return email
 
 
-# creating user login form 
 class LoginForm(AuthenticationForm):
+    """ User Login Form"""
     username = forms.CharField(widget=TextInput())
     password = forms.CharField(widget=PasswordInput())
 

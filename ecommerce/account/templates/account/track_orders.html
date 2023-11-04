@@ -11,7 +11,7 @@
             <hr>
         </div>
         {% for order in orders %}
-            <strong> Order ID: {{ order.id }} </strong> <br>            
+            <strong> Order ID: {{ order.order.id }} </strong> <br>            
             Order Product : {{ order.product }} <br>
             Quantity : {{ order.quantity }} <br>
             Price : ${{ order.price }} <br>

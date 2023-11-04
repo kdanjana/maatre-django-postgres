@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maatreapp
+  template:
+    metadata:
+      labels:
+        app: maatreapp
+    spec:
+      containers:
+      - name: maatre-container
+        image: kdanjana/maatre:v4
+        env:
+          - name: DB_HOST
+            value: maatreapp-db-service
+          - name: DB_NAME
+            value: devdb
+          - name: DB_USERNAME
+            value: devuser
+          - name: DB_PASSWORD
+            value: pwdpwdpwd
+          - name: DJANGO_SECRET_KEY
+            value: 'django-insecure-grky=d(ziu@8lqd=x-=yswhw$mcs9zr=7^jo#_owuhb*0*39v7'
+          - name: EMAIL_USERNAME
+            value: 'lakshmipnimmagadda@gmail.com'
+          - name: EMAIL_PASSWORD
+            value: 'drlflahkmhwvqkdj'
+          - name: DEBUG
+            value: '1'
+        ports:
+        - containerPort: 8000
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maatreapp-service
+spec:
+  selector:
+    app: maatreapp
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+      nodePort: 30001
+  type: NodePort

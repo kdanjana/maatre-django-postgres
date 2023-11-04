@@ -1,2 +1,9 @@
-./todoapp/db.sqlite3
+./ecommerce/db.sqlite3
 ./venv
+.env
+./ecommerce/static/media
+./ecommerce/ecommerce/__pycache__/*
+ecommerce/__pycache__/
+ecommerce/*/__pycache__/
+ecommerce/*/*/__pycache__/
+ecommerce/*/*/*/__pycache__/

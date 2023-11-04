@@ -59,9 +59,8 @@ def all_products(request):
                  Q(title__icontains=product_name) |
                  Q(description__icontains=product_name) 
             )
-            # if product_name is present in title field
             if len(all_products) != 0:
-                paginator = Paginator(all_products, 4) # show 4 products per page   
+                paginator = Paginator(all_products, 4) 
                 page_number = request.GET.get("page")
                 page_ob = paginator.get_page(page_number)
                 return render(request, 'store/all_products.html', {'all_products': page_ob})
@@ -72,3 +71,7 @@ def all_products(request):
     page_number = request.GET.get("page")
     page_ob = paginator.get_page(page_number)
     return render(request, 'store/all_products.html', {'all_products': page_ob})
+
+
+def custom_404(request, exception):
+    return render(request, '404.html')

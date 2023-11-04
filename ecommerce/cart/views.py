@@ -12,13 +12,13 @@ from store.models import Product
 
 
 
-# cart main page
 def cart_summary(request):
-   return render(request, "cart/cart_summary.html")
+    """ displays cart"""
+    return render(request, "cart/cart_summary.html")
 
 
-# adding to cart
 def cart_add(request):
+    """ adding product to cart"""
     cart = Cart(request)
     if request.method == 'POST':
         product_id = int(request.POST.get('product_id'))
@@ -29,8 +29,8 @@ def cart_add(request):
 
 
 
-# deleting from cart 
 def cart_delete(request):
+    """ deleting product from cart"""
     cart = Cart(request)
     if request.method == 'POST':
         product_id = int(request.POST.get('product_id'))
@@ -40,6 +40,7 @@ def cart_delete(request):
 
 
 def total_items(request):
+    """ count the total number of products present in cart"""
     cart = Cart(request)
     return {"total_qty": len(cart)}
 
@@ -60,11 +61,11 @@ def cart_update(request):
 @login_required(login_url='login')
 def saveitems_cart(request):
     cart = Cart(request)
-    user= request.user.id 
-    # get items in cart for that user
-    CartSummary.objects.filter(user_id=user).delete()
-    for product in cart:
-        prod_id = product['product'].id
-        CartSummary.objects.create(user_id=user, product_id=prod_id,qty=product['qty'])
-    
+    if len(cart) != 0:
+        user= request.user.id 
+        # get items in cart for that user
+        CartSummary.objects.filter(user_id=user).delete()
+        for product in cart:
+            prod_id = product['product'].id
+            CartSummary.objects.create(user_id=user, product_id=prod_id,qty=product['qty'])
     return redirect('dashboard')

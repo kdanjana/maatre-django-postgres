@@ -1,15 +1,11 @@
 # to generate random token for our verified email link
 # django provided us with built-in passwordresettokengenerator
-
-
 # - Import password reset token generator
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import six
 
 
 # - Password reset token generator method
-
 class UserVerificationTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         user_id = six.text_type(user.pk)

@@ -24,8 +24,13 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">  
     {% for product in all_products %}               
         <div class="col">
-            <div class="card shadow-sm">
-                <img class="img-fluid" alt="Responsive image" src="{{product.image.url}}">
+            <div class="card shadow-sm" width="100px" height="100px">
+                <img  class="img-fluid" alt="Responsive image" src="{{product.image.url}}" 
+                "style=object-fit:fill;
+                width:200px;
+                height:300px;
+                border: solid 1px #CCC"
+                >
                 <div class="card-body">
                     <p class="card-text">
                     <a class="text-info text-decoration-none" href="{{ product.get_absolute_url }}">{{product.title | capfirst}}</a>

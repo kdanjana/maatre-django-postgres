@@ -41,17 +41,13 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # we want any one that registers i.e fill form and have form.save()
-            # to have their account deactivated without having email verification done first
-            #  so we , change users's active status to false
+            # we want any one that registers  to have their account deactivated without having 
+            # email verification done first  so we , change users's active status to false
             user.is_active = False  # deactivate users account
             user.save()
-
             # email verification set up 
             current_site = get_current_site(request)
-            # subject heading to our activation email
             subject = "Maatre account verification email."
-            # content present in our email, template we want to render to string so we can send that to our user emials
             message = render_to_string("account/registration/email_verification.html",{
                         'user': user,
                         'domain': current_site.domain,
@@ -65,17 +61,13 @@ def register(request):
 
 
 def email_verification(request, uidb64, token):
-    # decode user id 
-    user_id = force_str(urlsafe_base64_decode(uidb64))
-    # collect user info from the User table
+    user_id = force_str(urlsafe_base64_decode(uidb64))      # decode user id 
     user = User.objects.get(pk=user_id)
     # success i.e if user clicked on the link sent to his email then its a success
     if user and user_tokenizer_generate.check_token(user, token):
-        # activate users account
-        user.is_active = True   
-        user.save()     # update user's account i.e is_active is updated to True
+        user.is_active = True                               # activate users account
+        user.save()     
         return redirect('email_verification_success')
-    # fail
     else:
         return redirect('email_verification_fail')
 
@@ -100,10 +92,8 @@ def login(request):
             password_form = request.POST.get('password')
             # do authentication i.e compare username and pwd from db to form's username and pwd
             user = authenticate(request, username=username_form, password=password_form)
-            # if user exists in db
-            if user is not None:
-                # allow user to login
-                auth.login(request, user)
+            if user is not None:                # if user exists in db
+                auth.login(request, user)       # allow user to login
                 cart = Cart(request)
                 allitems = CartSummary.objects.filter(user_id=request.user.id)
                 if len(allitems) != 0:
@@ -119,6 +109,13 @@ def login(request):
 
 def logout(request):
     cart = Cart(request)
+    user= request.user.id 
+    # get items in cart for that user
+    CartSummary.objects.filter(user_id=user).delete()
+    if len(cart) != 0:        
+        for product in cart:
+            prod_id = product['product'].id
+            CartSummary.objects.create(user_id=user, product_id=prod_id,qty=product['qty'])       
     cart.del_session(request)
     auth.logout(request)
     messages.success(request, "Logout success!")
@@ -130,9 +127,9 @@ def dashboard(request):
     return render(request, 'account/dashboard.html')
 
 
-# updating user's username and email
 @login_required(login_url='login')
 def profile_management(request):
+    """ updating user's username and email"""
     form = UpdateUserForm(instance=request.user)
     if request.method == 'POST':
         form = UpdateUserForm(request.POST, instance=request.user)  # capture post request  of all data  based on instance of current user i.e user currently signed in 

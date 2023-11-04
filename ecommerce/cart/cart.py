@@ -3,8 +3,8 @@ from decimal import Decimal
 from store.models import Product
 
 class Cart:
-    """ for session handling, create a session when object is created
-    for new user new session is created for registered/loggedin user exsiting session is utilised"""
+    """ for session handling, creates a session when object is created
+    for new user new session is created, for loggedin user exsiting session is utilised"""
     def __init__(self, request):
         self.session = request.session        
         cart = self.session.get('session_key')      # registered user gets his/her existing session 

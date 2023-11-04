@@ -1,28 +1,39 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+
+from django.core.mail import send_mail
+from django.conf import settings
+
 from .models import ShippingAddress, Order, OrderItem
 # import cart class
 from cart.cart import Cart
+from cart.models import CartSummary
+
+
 # Create your views here.
 
 
 @login_required(login_url='login')
 def checkout(request):
-    # prefill checkout form if user is logged in 
-    # check if user is logged in 
-    if request.user.is_authenticated:
-        try:
-            # check if logged in user has shipping info , return form filled with shipping info
-            shipping_address = ShippingAddress.objects.get(user=request.user.id)
-            context = {'shipping_address': shipping_address}
-            return render(request, 'payment/checkout.html', context)
-        except:
-            # if logged in user has no shipping info, return blank form
-            return render(request, 'payment/checkout.html')
+    cart = Cart(request)
+    if len(cart) != 0:
+        # prefill checkout form if user is logged in 
+        # check if user is logged in 
+        if request.user.is_authenticated:
+            try:
+                # check if logged in user has shipping info , return form filled with shipping info
+                shipping_address = ShippingAddress.objects.get(user=request.user.id)
+                context = {'shipping_address': shipping_address}
+                return render(request, 'payment/checkout.html', context)
+            except:
+                # if logged in user has no shipping info, return blank form
+                return render(request, 'payment/checkout.html')
+        else:
+            # for users who are not registered
+            return redirect('register')
     else:
-        # for users who are not registered
-        return redirect('register')
+        return redirect('dashboard')
 
 
 
@@ -46,10 +57,17 @@ def complete_order(request):
                                         amount_paid=total_cost,
                                         user=request.user)
         order_id = order.pk
+        product_list = []
         for item in cart:
-                OrderItem.objects.create(order_id=order_id, product=item['product'],
+            OrderItem.objects.create(order_id=order_id, product=item['product'],
                                         quantity=item['qty'], price=item['price'],
                                         user=request.user)
+            product_list.append(item['product'].title)
+        CartSummary.objects.filter(user=request.user).delete()
+        prods = ", ".join(product_list)
+        send_mail("Order Received", "Hi " + str(name).title() + ", "  + '\n\n' + "Thank you for placing your order." + '\n' 
+                  + "You ordered : " + str(prods) + '\n' + "You paid : ₹" + str(cart.get_total()) + '\n' 
+                  + "Your products will be delivered within 3 days. ", settings.EMAIL_HOST_USER, [email], fail_silently=False,)
         
     return redirect('payment_success')
 
